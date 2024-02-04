@@ -6,15 +6,8 @@ import pandas as pd
 import openai
 from openai import OpenAI
 
-# Set your OpenAI API key
-# api_key = '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'
-# client = OpenAI(api_key=api_key)
-# openai.api_type = "azure"
-# if use azure openai == 0.28.1
-# openai.api_base = "https://dklab-ncsu-ai-aiservices-1549581733.openai.azure.com/"
-# openai.api_version = "2023-08-01-preview"
-# openai.api_key = "324958e1da3b404fa5a6f5f9d6be6028"
-api_key = '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'
+
+api_key = 'sk-abcdefg'
 client = OpenAI(api_key=api_key)
 
 def get_sentiment(symbol, *texts):
