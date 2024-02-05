@@ -1,9 +1,9 @@
 # FNSPID
 # Data scraper
 Data scraper is divided into 3 main steps:
-1. use headline scraper to scrape the headline and url of the news
-2. use the news content scraper to crawl the text of the news
-3. use stock price scraper to scrape stock price
+1. use headline scraper to download the headline and url of the news
+2. use the news content scraper to download the text of the news
+3. use stock price scraper to download stock price
 
 Before using it, please install `Selenium` and the corresponding browser driver, and then follow the `requirements.txt` to configure the environment
 
