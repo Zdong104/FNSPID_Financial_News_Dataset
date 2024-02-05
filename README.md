@@ -9,7 +9,7 @@ Before using it, please install `Selenium` and the corresponding browser driver,
 
 `pip install -r requirements.txt`
 
-## 1. headline scraper：
+# 1. headline scraper：
 ## Before running the scraper, make sure that your current working directory is the `headline_scraper` folder
 
 `cd path/data_scraper/headline_scraper`
@@ -38,7 +38,7 @@ The `list_original` folder contains stock symbols starting with a-z in alphabeti
 5. Type `a-z`, as mentioned above
 6. Processed headlines will be stored in the `news_content_scraper/news_contents` folder
 
-# 3. stock price scraper scraper:
+# 3. stock price scraper:
 ## Before running the scraper, make sure that your current working directory is the `stock_price_scraper` folder
 
 `cd path/data_scraper/stock_price_scraper`
