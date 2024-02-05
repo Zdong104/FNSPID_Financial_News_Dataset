@@ -38,8 +38,8 @@ The `list_original` folder contains stock symbols starting with a-z in alphabeti
 5. Type `a-z`, as mentioned above
 6. Processed headlines will be stored in the `news_content_scraper/news_contents` folder
 
-7. # 2. stock price scraper scraper:
- ## Before running the scraper, make sure that your current working directory is the `stock_price_scraper` folder
+# 3. stock price scraper scraper:
+## Before running the scraper, make sure that your current working directory is the `stock_price_scraper` folder
 
 `cd path/data_scraper/stock_price_scraper`
 1. Put all the lists in `list_original` into the `stock_price_scraper/lists` folder
