@@ -1,6 +1,7 @@
 # FNSPID
 # Data scraper
-Data scraper is divided into 3 main steps:
+`data_scraper` is aiming to collect news and price data of stocks
+`data_scraper` is divided into 3 main steps:
 1. use headline scraper to download the headline and url of the news
 2. use the news content scraper to download the text of the news
 3. use stock price scraper to download stock price
@@ -9,8 +10,8 @@ Before using it, please install `Selenium` and the corresponding browser driver,
 
 `pip install -r requirements.txt`
 
-# 1. headline scraper：
-## Before running the scraper, make sure that your current working directory is the `headline_scraper` folder
+## 1. headline scraper：
+### Before running the scraper, make sure that your current working directory is the `headline_scraper` folder
 
 `cd path/data_scraper/headline_scraper`
 
@@ -27,8 +28,8 @@ The `list_original` folder contains stock symbols starting with a-z in alphabeti
 
  4. Processed headlines will be stored in the `headline_scraper/headlines` folder according to the stock symbol, e.g.: `aapl.csv`, `ibm.csv` ...
 
-# 2. news content scraper:
-## Before running the scraper, make sure that your current working directory is the `News_content_scraper` folder
+## 2. news content scraper:
+### Before running the scraper, make sure that your current working directory is the `News_content_scraper` folder
 
 `cd path/data_scraper/news_content_scraper`
 1. Put all the lists in `list_original` into the `news_content_scraper/lists` folder
@@ -38,8 +39,8 @@ The `list_original` folder contains stock symbols starting with a-z in alphabeti
 5. Type `a-z`, as mentioned above
 6. Processed headlines will be stored in the `news_content_scraper/news_contents` folder
 
-# 3. stock price scraper:
-## Before running the scraper, make sure that your current working directory is the `stock_price_scraper` folder
+## 3. stock price scraper:
+### Before running the scraper, make sure that your current working directory is the `stock_price_scraper` folder
 
 `cd path/data_scraper/stock_price_scraper`
 1. Put all the lists in `list_original` into the `stock_price_scraper/lists` folder
@@ -47,3 +48,11 @@ The `list_original` folder contains stock symbols starting with a-z in alphabeti
 4. run `get_price_from_yahoo.py`
 5. Type `a-z`, as mentioned above
 6. Processed headlines will be stored in the `stock_price_scraper/yahoo` folder
+
+# Data processor
+`data_processor` is used to score the collected news data with sentiment and then process it into a format that can be used to train model
+`data_scraper` is divided into 3 main steps:
+## 1. `preprocess.py`
+## 2. `summarize.py`
+## 3. `score_by_gpt.py`
+## 4. `price_news_integrate.py`
