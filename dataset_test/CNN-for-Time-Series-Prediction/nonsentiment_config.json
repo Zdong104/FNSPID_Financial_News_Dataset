@@ -1,0 +1,56 @@
+{
+    "data": {
+        "filename": "",
+        "columns": [
+            "Close",
+            "Volume"
+        ],
+        "columns_to_normalise": [0, 1],
+        "sequence_length": 50,
+        "prediction_length": 3,
+        "train_test_split": 0.85,
+        "normalise": true
+    },
+    "training": {
+        "epochs": 20,
+        "batch_size": 32
+    },
+    "model": {
+        "loss": "mse",
+        "optimizer": "adam",
+        "save_dir": "saved_models",
+        "layers": [
+            {
+                "type": "cnn",
+                "neurons": 64, 
+                "kernel_size": 3,
+                "input_timesteps": 49,
+                "input_dim": 2
+            },
+            {
+                "type": "cnn",
+                "neurons": 32, 
+                "kernel_size": 3
+            },
+            {
+                "type": "cnn",
+                "neurons": 32, 
+                "kernel_size": 3
+            },
+            {
+                "type": "cnn",
+                "neurons": 32, 
+                "kernel_size": 3
+            },
+            {
+                "type": "dropout",
+                "rate": 0.2
+            },
+            {
+                "type": "dense",
+                "neurons": 1,
+                "activation": "linear"
+            }
+        ]
+    }
+}
