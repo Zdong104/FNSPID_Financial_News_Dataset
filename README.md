@@ -63,5 +63,5 @@ This operation integrates the news data with the price data by date and uses exp
 
 # Dataset experiments
 ## 1. Test dataset on classic models: CNN, RNN, GRU, LSTM
-
+In `classic_model_test` run `run.py` in the folder corresponding to each model, e.g `CNN-for-Time-Series-Prediction/run.py`
 ## 2. Test dataset on cutting-edge models：Transformer, TimesNet
