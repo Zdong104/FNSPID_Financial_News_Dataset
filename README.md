@@ -62,6 +62,6 @@ This operation selects one of the four summarised texts obtained in operation 2 
 This operation integrates the news data with the price data by date and uses exponential decay for dates without news
 
 # Dataset experiments
-## 1.Test dataset on classic models: CNN RNN GRU LSTM
+## 1.Test dataset on classic models: CNN, RNN, GRU, LSTM
 
-## 2. Test dataset on cutting-edge models：Transformer TimesNet
+## 2. Test dataset on cutting-edge models：Transformer, TimesNet
