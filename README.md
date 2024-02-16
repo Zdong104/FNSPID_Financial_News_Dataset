@@ -60,3 +60,8 @@ This operation uses Sumy library to summarise the news data with four algorithms
 This operation selects one of the four summarised texts obtained in operation 2 and feed it to gpt according to our `prompt`, so that gpt can give a sentiment score for the given stock symbol
 ## 4. `price_news_integrate.py`
 This operation integrates the news data with the price data by date and uses exponential decay for dates without news
+
+# Dataset experiments
+## 1.Test dataset on classic models: CNN RNN GRU LSTM
+
+## 2. Test dataset on cutting-edge models：Transformer TimesNet
