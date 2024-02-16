@@ -62,6 +62,6 @@ This operation selects one of the four summarised texts obtained in operation 2 
 This operation integrates the news data with the price data by date and uses exponential decay for dates without news
 
 # Dataset experiments
-## 1. Test dataset on classic models: CNN, RNN, GRU, LSTM
-In `classic_model_test` run `run.py` in the folder corresponding to each model, e.g `CNN-for-Time-Series-Prediction/run.py`
-## 2. Test dataset on cutting-edge models：Transformer, TimesNet
+## 1. Test dataset on classic models: CNN, RNN, GRU, LSTM, and cutting-edge models：Transformer, TimesNet
+In `dataset_test` folder, run `run.py` in the folder corresponding to each model, e.g `CNN-for-Time-Series-Prediction/run.py`, `TimesNet-for-Time-Series-Prediction/run.py`
+## 2. Evaluate by comparing their results
