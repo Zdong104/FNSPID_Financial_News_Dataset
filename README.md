@@ -64,5 +64,6 @@ This operation integrates the news data with the price data by date and uses exp
 # Dataset experiments
 ## 1. Test dataset on classic models: CNN, RNN, GRU, LSTM, and cutting-edge models：Transformer, TimesNet
 In `dataset_test` folder, run `run.py` in the folder corresponding to each model, e.g. `CNN-for-Time-Series-Prediction/run.py`, `TimesNet-for-Time-Series-Prediction/run.py`
+
 Results and trained models will be stored at corresponding folders e.g. `CNN-for-Time-Series-Prediction/saved_models`, `CNN-for-Time-Series-Prediction/test_result_50`(50 means using 50 csvs to test)
 ## 2. Evaluate by comparing their results
