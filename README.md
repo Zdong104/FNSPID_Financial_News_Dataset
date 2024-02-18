@@ -1,15 +1,19 @@
 # FNSPID
-In this github repo, we did three main tasks：
+** We appreciate your interest in stopping by our repo, This repo is still developing, the full version will be done before Feb 25, 2024. **
+Meanwhile, we will include the tool, dataset and trained model and code. 
+
+
+In this GitHub repo, we did three main tasks：
 ## 1. Data scraper. 
-In folder `data_scraper`, we provided tools to collect news data from nasdaq.
+In the folder `data_scraper`, we provided tools to collect news data from Nasdaq.
 ## 2. Data processor.
-In folder `data_processor`, we explained how we integrate our data into into workable data.
+In the folder `data_processor`, we explained how we integrate our data into workable data.
 ## 3. Dataset experiments.
-In folder `dataset_test`, we provided ways using DL models to test dataset.
+In folder `dataset_test`, we provided ways using DL models to test the dataset.
 # Data scraper
-`data_scraper` is aiming to collect news and price data of stocks
+`data_scraper` aims to collect news and price data on stocks
 `data_scraper` is divided into 3 main steps:
-1. use headline scraper to download the headline and url of the news
+1. use headline scraper to download the headline and URL of the news
 2. use the news content scraper to download the text of the news
 3. use stock price scraper to download stock price
 
