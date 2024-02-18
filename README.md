@@ -101,3 +101,16 @@ The use of this code for commercial purposes is strictly prohibited without prio
 ## Acknowledgement
 
 By accessing, using, or contributing to this code, you acknowledge having read this disclaimer and agree to its terms. If you do not agree with these conditions, you should refrain from using or interacting with the code in any manner.
+
+
+
+## Citation
+
+'@misc{dong2024fnspid,
+      title={FNSPID: A Comprehensive Financial News Dataset in Time Series}, 
+      author={Zihan Dong and Xinyu Fan and Zhiyuan Peng},
+      year={2024},
+      eprint={2402.06698},
+      archivePrefix={arXiv},
+      primaryClass={q-fin.ST}
+}'
