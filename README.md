@@ -67,3 +67,6 @@ In `dataset_test` folder, run `run.py` in the folder corresponding to each model
 
 Results and trained models will be stored at corresponding folders e.g. `CNN-for-Time-Series-Prediction/saved_models`, `CNN-for-Time-Series-Prediction/test_result_50`(50 means using 50 csvs to test)
 ## 2. Evaluate by comparing their results
+Running `integrate_result.py` in folder `dataset_test` creates the `integrated_eval_data_{n}` folder (n represents number of csvs used in test) and folder `integrated_predicted_data_{n}`.
+
+The `integrated_eval_data_{n}` folder stores mse, mae and r2 information, and the `integrated_predicted_data_{n}` folder stores the predicted result data.
