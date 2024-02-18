@@ -26,7 +26,7 @@ The `list_original` folder contains stock symbols starting with a-z in alphabeti
 
 ![1707098657333](https://github.com/Zdong104/FNSPID/assets/91862936/9db14d61-9d44-4bcf-89d9-282de88238fd)
 
- 4. Processed headlines will be stored in the `headline_scraper/headlines` folder according to the stock symbol, e.g.: `aapl.csv`, `ibm.csv` ...
+ 4. Processed headlines will be stored in the `headline_scraper/headlines` folder according to the stock symbol, e.g. `aapl.csv`, `ibm.csv` ...
 
 ## 2. news content scraper:
 ### Before running the scraper, make sure that your current working directory is the `News_content_scraper` folder
@@ -73,4 +73,4 @@ This creates the `integrated_eval_data_{n}` folder (n represents number of csvs 
 The `integrated_eval_data_{n}` folder stores mse, mae and r2 information, and the `integrated_predicted_data_{n}` folder stores the predicted result data.
 
 ### Running `eval_output.py` in folder `dataset_test` 
-This creates a table of comparisons based on the `integrated_eval_data_{n}` folder created before. e.g. `merged_eval_data_5.csv`
+This creates a table of comparisons based on the `integrated_eval_data_{n}` folder created before e.g. `merged_eval_data_5.csv`
