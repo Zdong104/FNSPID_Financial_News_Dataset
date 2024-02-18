@@ -1,4 +1,11 @@
 # FNSPID
+In this github repo, we did three main tasks：
+## 1. Data scraper. 
+In folder `data_scraper`, we provided tools to collect news data from nasdaq.
+## 2. Data processor.
+In folder `data_processor`, we explained how we integrate our data into into workable data.
+## 3. Dataset experiments.
+In folder `dataset_test`, we provided ways using DL models to test dataset.
 # Data scraper
 `data_scraper` is aiming to collect news and price data of stocks
 `data_scraper` is divided into 3 main steps:
@@ -74,3 +81,23 @@ The `integrated_eval_data_{n}` folder stores mse, mae and r2 information, and th
 
 ### Running `eval_output.py` in folder `dataset_test` 
 This creates a table of comparisons based on the `integrated_eval_data_{n}` folder created before e.g. `merged_eval_data_5.csv`
+
+
+# Disclaimer
+## Reliability and Security
+
+The code provided in this GitHub repository is shared without any guarantee for its reliability and security. The developers and contributors of this project expressly disclaim any warranty, either implied or explicit, regarding the code's performance, security, or suitability for any particular purpose. The users should employ this code at their own risk, acknowledging that the developers shall not be held responsible for any damages or issues arising from its use.
+
+
+## Purpose of Use
+
+This code is primarily intended to illustrate our workflow processes and to serve as a medium for educational exchange and learning among users. It is made available for the purpose of showcasing our technical approaches and facilitating learning within the community. It is not designed for direct application in production environments or critical systems.
+
+## Prohibition of Commercial Use
+
+The use of this code for commercial purposes is strictly prohibited without prior authorization. If you wish to utilize this code in a commercial setting or for any revenue-generating activities, you are required to obtain explicit permission from the original authors. Please contact us at puma122707@gmail.com to discuss licensing arrangements or to seek approval for commercial use.
+
+
+## Acknowledgement
+
+By accessing, using, or contributing to this code, you acknowledge having read this disclaimer and agree to its terms. If you do not agree with these conditions, you should refrain from using or interacting with the code in any manner.
