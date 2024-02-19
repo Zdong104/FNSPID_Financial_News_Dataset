@@ -1,6 +1,8 @@
 # Data processor
-`data_processor` is used to score the collected news data with sentiment and then process it into a format that can be used to train model
+`data_processor` is used to score the collected news data with sentiment and then process it into a format that can be used to train mode
 `data_scraper` is divided into 4 main steps:
+### Before running the scraper, make sure that your current working directory is the `data_processor` folder
+`cd path/data_processor`
 ## 1. Preprocess
 Run `preprocess.py`
 
