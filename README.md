@@ -1,12 +1,15 @@
-# FNSPID
-** We appreciate your interest in stopping by our repo, This repo is still developing, the full version will be done before Feb 25, 2024. **
-Meanwhile, we will include the tool, dataset and trained model and code. 
+# FNSPID: A Comprehensive Financial News Dataset in Time Series
+FNSPID (Financial News and Stock Price Integration Dataset), is a comprehensive financial dataset designed to enhance stock market predictions by combining quantitative and qualitative data. It contains 29.7 million stock prices and 15.7 million financial news records for 4,775 S&P500 companies from 1999 to 2023, gathered from four stock market news websites. This dataset stands out for its scale, diversity, and unique incorporation of sentiment information from financial news. Research using FNSPID has shown that its extensive size and quality can significantly improve the accuracy of market predictions. Furthermore, integrating sentiment scores into analyses modestly boosts the performance of transformer-based models. FNSPID also introduces a reproducible method for dataset updates, offering valuable resources for financial research, including complete work, code, documentation, and examples available online. This dataset presents new opportunities for advancing predictive modeling and analysis in the financial research community.
 
-### what is fnspid
-### where is dataset
-### what can this repo do
-### how to use
-`pip install -r requirements.txt`
+** We appreciate your interest in stopping by our repo, This repo is still developing, the full version will be done before Feb 25, 2024. **
+Meanwhile, we will include the tool, dataset, and trained model and code. 
+
+### Dataset location
+Due to the large volume of the dataset, the dataset is available at the [link](https://huggingface.co/datasets/Zihan1004/FNSPID/).
+
+### What can this repo do? 
+The FNSPID repository offers the FNSPID dataset, experimental results, and a news content scraper tool. It provides comprehensive financial data combining stock prices and news records for S&P500 companies, demonstrates the dataset's impact on prediction accuracy, and includes a tool for updating the dataset with new financial news. 
+
 In this GitHub repo, we did three main tasks：
 ## 1. Data scraper. 
 In folder `data_scraper`, we provided tools to collect news data from Nasdaq.
@@ -16,7 +19,14 @@ In folder `data_processor`, we explained how we integrate our data into workable
 In folder `dataset_test`, we provided ways using DL models to test the dataset.
 
 
-### For details of how to use them, you can find instructions `data_scraper.md`, `data_processor.md` and `dataset_test.md` in these folders
+### For details of how to use them, you can find instructions `data_scraper.md`, `data_processor.md`, and `dataset_test.md` in these folders
+
+
+
+### Related Financial Datasets: 
+[Financial-News-Datasets 2013](https://github.com/philipperemy/financial-news-dataset)
+[Benzinga](https://www.kaggle.com/datasets/miguelaenlle/massive-stock-news-analysis-db-for-nlpbacktests)
+
 
 
 # Disclaimer
