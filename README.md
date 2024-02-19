@@ -5,7 +5,7 @@ FNSPID (Financial News and Stock Price Integration Dataset), is a comprehensive 
 Meanwhile, we will include the tool, dataset, and trained model and code. 
 
 ### Dataset location
-Due to the large volume of the dataset, the dataset is available at the [link](https://huggingface.co/datasets/Zihan1004/FNSPID/).
+Due to the large volume of the dataset, the dataset is available at the [Hugging Face](https://huggingface.co/datasets/Zihan1004/FNSPID/).
 
 ### What can this repo do? 
 The FNSPID repository offers the FNSPID dataset, experimental results, and a news content scraper tool. It provides comprehensive financial data combining stock prices and news records for S&P500 companies, demonstrates the dataset's impact on prediction accuracy, and includes a tool for updating the dataset with new financial news. 
