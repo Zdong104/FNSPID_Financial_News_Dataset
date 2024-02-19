@@ -25,6 +25,7 @@ In folder `dataset_test`, we provided ways using DL models to test the dataset.
 
 ### Related Financial Datasets: 
 [Financial-News-Datasets 2013](https://github.com/philipperemy/financial-news-dataset)
+
 [Benzinga](https://www.kaggle.com/datasets/miguelaenlle/massive-stock-news-analysis-db-for-nlpbacktests)
 
 
