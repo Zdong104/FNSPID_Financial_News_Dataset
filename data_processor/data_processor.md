@@ -14,13 +14,13 @@ e.g `aa.csv`
 Before preprocess:`news_data_raw/aa.csv`
 | Date                        | Url                                                                                                      | Text   | Mark |
 |-----------------------------|----------------------------------------------------------------------------------------------------------|--------|------|
-| January 17, 2024 — 08:52 am EST | [https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints](https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints) | abcdef | 1    |
+| January 17, 2024 — 08:52 am EST | [https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints](https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints) | Long news text | 1    |
 
 After preprocess:`news_data_preprocessed/aa.csv`
 
 | Date                        | Url                                                                                                      | Text   | Mark |
 |-----------------------------|----------------------------------------------------------------------------------------------------------|--------|------|
-| 2024-01-17 03:52:00+00:00 | [https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints](https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints) | abcdef | 1    |
+| 2024-01-17 03:52:00+00:00 | [https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints](https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints) | Long news text | 1    |
 
 ## 2. Summarize news by sumy
 Run `summarize.py`
