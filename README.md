@@ -6,6 +6,7 @@ Meanwhile, we will include the tool, dataset and trained model and code.
 ### where is dataset
 ### what can this repo do
 ### how to use
+`pip install -r requirements.txt`
 In this GitHub repo, we did three main tasks：
 ## 1. Data scraper. 
 In folder `data_scraper`, we provided tools to collect news data from Nasdaq.
