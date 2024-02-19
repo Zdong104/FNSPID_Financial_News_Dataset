@@ -8,10 +8,33 @@
 Run `preprocess.py`
 
 This operation involves removing invalid and redundant price data and news data, and then converting the time to UTC format so that subsequent price data and news data can be aligned.
+
+e.g `aa.csv`
+
+Before preprocess:`news_data_raw/aa.csv`
+| Date                        | Url                                                                                                      | Text   | Mark |
+|-----------------------------|----------------------------------------------------------------------------------------------------------|--------|------|
+| January 17, 2024 — 08:52 am EST | [https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints](https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints) | abcdef | 1    |
+
+After preprocess:`news_data_preprocessed/aa.csv`
+
+| Date                        | Url                                                                                                      | Text   | Mark |
+|-----------------------------|----------------------------------------------------------------------------------------------------------|--------|------|
+| 2024-01-17 03:52:00+00:00 | [https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints](https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints) | abcdef | 1    |
+
 ## 2. Summarize news by sumy
 Run `summarize.py`
 
 This operation uses Sumy library to summarise the news data with four algorithms, LSA, LexRank, Luhn and SumBasic, to obtain the summarised text
+
+e.g `aa.csv`
+
+Before summarize:`news_data_preprocessed/aa.csv`
+| Date                        | Url                                                                                                      | Text   | Mark |
+|-----------------------------|----------------------------------------------------------------------------------------------------------|--------|------|
+| 2024-01-17 03:52:00+00:00 | [https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints](https://www.nasdaq.com/articles/sp-futures-slip-ahead-of-key-u.s.-retail-sales-data-chinese-data-disappoints) | abcdef | 1    |
+
+
 ## 3. Give sentiment scroe to summarized news text by GPT
 Run`score_by_gpt.py`
 
