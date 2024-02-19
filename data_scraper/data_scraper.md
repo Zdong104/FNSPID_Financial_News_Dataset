@@ -15,7 +15,7 @@ Before using it, please install `Selenium` and the corresponding browser driver,
 `cd path/data_scraper/headline_scraper`
 
  1. Put all the lists in `list_original` into the `headline_scraper/lists` folder
- 2. run `initialize_lists.py` to initialize list files
+ 2. For the first time of use, please run `initialize_lists.py` to initialize list files
 The `list_original` folder contains stock symbols starting with a-z in alphabetical order
 
  3. run `find_headlines v0.2.py`
