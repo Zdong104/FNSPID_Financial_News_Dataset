@@ -37,7 +37,7 @@ The `list_original` folder contains stock symbols starting with a-z in alphabeti
 3. run 'add_Mark.py' first
 4. run `find_content v0.2.py`
 5. Type `a-z`, as mentioned above
-6. Processed headlines will be stored in the `news_content_scraper/news_contents` folder
+6. Scraped text will be stored as `aapl.csv`, `ibm.csv` in `news_content_scraper/news_contents` folder
 
 ## 3. stock price scraper:
 ### Before running the scraper, make sure that your current working directory is the `stock_price_scraper` folder
@@ -47,4 +47,4 @@ The `list_original` folder contains stock symbols starting with a-z in alphabeti
 2. run 'add_Mark.py' first
 4. run `get_price_from_yahoo.py`
 5. Type `a-z`, as mentioned above
-6. Processed headlines will be stored in the `stock_price_scraper/yahoo` folder
+6. Scraped price data will be stored as `aapl.csv`, `ibm.csv` in `stock_price_scraper/yahoo` folder
