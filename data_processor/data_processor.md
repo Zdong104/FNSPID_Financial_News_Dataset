@@ -1,4 +1,4 @@
-![image](https://github.com/Zdong104/FNSPID/assets/91862936/566fb249-8392-401f-be5b-140bcbcc8284)# Data processor
+# Data processor
 `data_processor` is used to score the collected news data with sentiment and then process it into a format that can be used to train model
 `data_processor` is divided into 4 main steps:
 ### Before running the scraper, make sure that your current working directory is the `data_processor` folder
