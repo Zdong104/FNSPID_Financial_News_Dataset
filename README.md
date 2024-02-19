@@ -2,7 +2,10 @@
 ** We appreciate your interest in stopping by our repo, This repo is still developing, the full version will be done before Feb 25, 2024. **
 Meanwhile, we will include the tool, dataset and trained model and code. 
 
-
+what is fnspid
+where is dataset
+what can this repo do
+how to use
 In this GitHub repo, we did three main tasks：
 ## 1. Data scraper. 
 In folder `data_scraper`, we provided tools to collect news data from Nasdaq.
