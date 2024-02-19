@@ -1,7 +1,12 @@
 # Dataset experiments
 In this section, we provide code that can reproduce our experiments, , and for each model we have used a separate folder to store the experiments, e.g. folder `CNN-for-Time-Series-Prediction`
 ## 1. Test dataset on classic models: CNN, RNN, GRU, LSTM, and cutting-edge models：Transformer, TimesNet
-In `dataset_test` folder, run `run.py` in the folder corresponding to each model, e.g. `CNN-for-Time-Series-Prediction/run.py`, `TimesNet-for-Time-Series-Prediction/run.py`
+In `dataset_test` folder, run `run.py` in the folder corresponding to each model
+e.g. 
+```
+cd path/dataset_test/CNN-for-Time-Series-Prediction
+python run.py
+```
 
 Results and trained models will be stored at corresponding folders e.g. `CNN-for-Time-Series-Prediction/saved_models`, `CNN-for-Time-Series-Prediction/test_result_50`(50 means using 50 csvs to test)
 ## 2. Evaluate by comparing their results
