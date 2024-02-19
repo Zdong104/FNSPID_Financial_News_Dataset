@@ -3,6 +3,7 @@
 `data_processor` is divided into 4 main steps:
 ### Before running the scraper, make sure that your current working directory is the `data_processor` folder
 `cd path/data_processor`
+
 ## 1. Preprocess
 Run `preprocess.py`
 
