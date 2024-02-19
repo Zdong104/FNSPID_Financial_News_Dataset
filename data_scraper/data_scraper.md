@@ -5,7 +5,7 @@
 2. use the news content scraper to download the text of the news
 3. use stock price scraper to download stock price
 
-Before using it, please install `Selenium` and the corresponding browser driver, and then follow the `requirements.txt` to configure the environment
+Before using it, please install `Selenium` and the corresponding [browser driver](https://googlechromelabs.github.io/chrome-for-testing/), and then follow the `requirements.txt` to configure the environment
 
 `pip install -r requirements.txt`
 
