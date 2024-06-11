@@ -1,4 +1,5 @@
-# News: FNSPID has been selected as KDD2024 Applied Data Science Track Paper
+# News: 
+FNSPID has been selected as KDD2024 Applied Data Science Track Paper
 
 
 
