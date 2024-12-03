@@ -26,8 +26,8 @@ In folder `dataset_test`, we provided ways using DL models to test the dataset.
 
 ### Download
 ```bash
-curl -X GET \
-     "https://datasets-server.huggingface.co/first-rows?dataset=Zihan1004%2FFNSPID&config=default&split=train"
+wget https://huggingface.co/datasets/Zihan1004/FNSPID/resolve/main/Stock_price/full_history.zip
+wget https://huggingface.co/datasets/Zihan1004/FNSPID/resolve/main/Stock_news/nasdaq_exteral_data.csv
 ```
 
 ### Related Financial Datasets: 
