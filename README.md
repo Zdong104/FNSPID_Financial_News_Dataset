@@ -24,7 +24,11 @@ In folder `dataset_test`, we provided ways using DL models to test the dataset.
 
 ### For details of how to use them, you can find instructions `data_scraper.md`, `data_processor.md`, and `dataset_test.md` in these folders
 
-
+### Download
+```bash
+curl -X GET \
+     "https://datasets-server.huggingface.co/first-rows?dataset=Zihan1004%2FFNSPID&config=default&split=train"
+```
 
 ### Related Financial Datasets: 
 [Financial-News-Datasets 2013](https://github.com/philipperemy/financial-news-dataset)
