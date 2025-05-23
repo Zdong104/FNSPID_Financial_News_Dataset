@@ -49,22 +49,23 @@ def sentiment_predict(csv_data, symbol, num_csvs, pred_flag):
     # Selecting specified columns and normalizing the data
     input_features = ['Volume', 'Open', 'Close', 'Scaled_sentiment']
     csv_data_selected = csv_data[input_features]
-    scaler = MinMaxScaler()
-    # scaler = RobustScaler()
-    csv_data_normalized = scaler.fit_transform(csv_data_selected)
-    # print(csv_data_selected)
-    # Creating input-output sequences
+
     input_length = 50
     output_length = 3
-
     split_ratio = 0.85
-    split = int(split_ratio * len(csv_data_normalized))
-    data_train = csv_data_normalized[:split]
-    data_test = csv_data_normalized[split:]
-    # print(len(data_train))
-    # print(len(data_test))
-    X_train, y_train = create_sequences(data_train, input_length, output_length)
-    X_test, y_test = create_sequences(data_test, input_length, output_length)
+    split_idx = int(split_ratio * len(csv_data_selected))
+    raw_train = csv_data_selected[:split_idx]
+    raw_test  = csv_data_selected[split_idx:]
+
+    # 2. Scale based on train only
+    scaler = MinMaxScaler().fit(raw_train)
+    train_scaled = scaler.transform(raw_train)
+    test_scaled  = scaler.transform(raw_test)
+
+    # 3. Build sequences
+    X_train, y_train = create_sequences(train_scaled, input_length, output_length)
+    X_test,  y_test  = create_sequences(test_scaled,  input_length, output_length)
+
 
     # # Splitting the data into training and testing sets
 
@@ -218,21 +219,22 @@ def nonsentiment_predict(csv_data, symbol, num_csvs, pred_flag):
     # Selecting specified columns and normalizing the data
     input_features = ['Volume', 'Open', 'Close']
     csv_data_selected = csv_data[input_features]
-    scaler = MinMaxScaler()
-    # scaler = RobustScaler()
-    csv_data_normalized = scaler.fit_transform(csv_data_selected)
-    # Creating input-output sequences
+
     input_length = 50
     output_length = 3
-
     split_ratio = 0.85
-    split = int(split_ratio * len(csv_data_normalized))
-    data_train = csv_data_normalized[:split]
-    data_test = csv_data_normalized[split:]
-    # print(len(data_train))
-    # print(len(data_test))
-    X_train, y_train = create_sequences(data_train, input_length, output_length)
-    X_test, y_test = create_sequences(data_test, input_length, output_length)
+    split_idx = int(split_ratio * len(csv_data_selected))
+    raw_train = csv_data_selected[:split_idx]
+    raw_test  = csv_data_selected[split_idx:]
+
+    # 2. Scale based on train only
+    scaler = MinMaxScaler().fit(raw_train)
+    train_scaled = scaler.transform(raw_train)
+    test_scaled  = scaler.transform(raw_test)
+
+    # 3. Build sequences
+    X_train, y_train = create_sequences(train_scaled, input_length, output_length)
+    X_test,  y_test  = create_sequences(test_scaled,  input_length, output_length)
 
     # # Splitting the data into training and testing sets
 

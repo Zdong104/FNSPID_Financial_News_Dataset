@@ -27,10 +27,6 @@ def create_sequences(data, input_length, output_length):
     return np.array(X), np.array(y)
 
 
-
-
-
-
 def read_csv_case_insensitive(file_path):
     try:
         # Convert the filename pattern to a case-insensitive glob pattern
@@ -59,25 +55,27 @@ def data_processor(data):
   device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
   # print('device = ',device)
   # print(data)
-  # Scaling the data
-  scaler = MinMaxScaler()
-  scaled_data = scaler.fit_transform(data)
 
   # Creating sequences
   input_length = 50
   output_length = 3
 
-  # Split training data into training and validation sets
+  # 1. Split raw data
   split_ratio = 0.85
-  split = int(split_ratio * len(scaled_data))
-  data_train = scaled_data[:split]
-  data_test = scaled_data[split:]
-  print('data_train',data_train.shape)
-  print('data_test',data_test.shape)
+  split_idx = int(split_ratio * len(data))
+  raw_train = data[:split_idx]
+  raw_test  = data[split_idx:]
+  print('data_train',raw_train.shape)
+  print('data_test',raw_test.shape)
 
-  # Splitting the dataset into training and testing sets (80-20 split)
-  X_train, y_train = create_sequences(data_train, input_length, output_length)
-  X_test, y_test = create_sequences(data_test, input_length, output_length)
+    # 2. Scale based on train only
+  scaler = MinMaxScaler().fit(raw_train)
+  train_scaled = scaler.transform(raw_train)
+  test_scaled  = scaler.transform(raw_test)
+
+    # 3. Build sequences
+  X_train, y_train = create_sequences(train_scaled, input_length, output_length)
+  X_test,  y_test  = create_sequences(test_scaled,  input_length, output_length)
 
   # Displaying the shapes of the datasets to ensure correctness
   print('X_train: ',X_train.shape, 'X_test', X_test.shape, 'y_train', y_train.shape, 'y_test',y_test.shape)
@@ -131,8 +129,10 @@ def train_model(dataloader_train, pred_flag, symbol ,num_csvs, d_input):
       If using the ``'regular'` pe, then we can define the period. Default is
       ``None``.
   """
-    # Model parameters
-  d_output = d_input # prediction length be 6, this is confirmed
+    # Model parameters  
+  chunk_mode = None
+  output_length = 3
+  d_output = output_length * d_input# prediction length be 6, this is confirmed
   d_model = 32 # Lattent dim
   q = 8 # Query size
   v = 8 # Value size
@@ -141,8 +141,7 @@ def train_model(dataloader_train, pred_flag, symbol ,num_csvs, d_input):
   attention_size = 50 # Attention window size 这个和形状没有关系
   dropout = 0.1 # Dropout rate
   pe = 'regular' # Positional encoding
-  chunk_mode = None
-  output_length = 3
+
   # Creating sequences
 
   # Creating the model
@@ -183,7 +182,13 @@ def train_model(dataloader_train, pred_flag, symbol ,num_csvs, d_input):
               # Propagate input
               y_pred = model(x.to(device)) # torch.Size([64, 50, 6])
 
-              y_pred_reshaped = y_pred[:, -int(output_length):, :]  # Take the last 3 slices along the second dimension, 本来是50个element的， 解码的时候我们只关心最后的三个
+              y_pred = y_pred.view(                  # → [B, 3, 6]
+                    y_pred.size(0), 
+                    output_length,   # 3
+                    d_input          # 6
+              )
+
+              y_pred_reshaped = y_pred # Take the last 3 slices along the second dimension, 本来是50个element的， 解码的时候我们只关心最后的三个
 
               # Comupte loss
               loss = loss_function(y.to(device), y_pred_reshaped) # [64,3,6] & [64,3,6] 
@@ -217,114 +222,201 @@ def train_model(dataloader_train, pred_flag, symbol ,num_csvs, d_input):
 
 
 
+# def eval_model(model, dataloader_test, symbol, num_csvs, scaler, output_length):
+#       # Prediction on test data
+#       predictions = []
+#       actuals = []
+#       model.eval()
+#       with torch.no_grad(): 
+#         # for x, y in enumerate(dataloader_test):
+#         for x, y in dataloader_test:
+#             modelout_pre = model(x.to(device))        # → [B,18]
+#             BATCH = modelout_pre.size(0)
+#             modelout = modelout_pre.view(BATCH, output_length, -1)
+#             # print('modelout',modelout.shape)
+#             predictions.append(modelout.cpu().numpy())
+#             actuals.append(y.cpu().numpy())
+      
+
+
+#       output_length = 3
+#       predictions_np = np.concatenate(predictions, axis=0) # (155, 3, 6)
+#       actuals_np = np.concatenate(actuals, axis=0) # (155, 3, 6)
+      
+      
+#       y_pred_reshaped = predictions_np.reshape(-1, 6)
+#       y_test_reshaped = actuals_np.reshape(-1, 6)
+#       print('y_pred_reshaped', y_pred_reshaped.shape)
+#       print('y_test_reshaped', y_test_reshaped.shape)
+
+#       scaled_flat = predictions_np.reshape(-1, 6)
+#       truth_flat  = actuals_np.reshape(-1, 6)
+
+
+#       mse_scaled = mean_squared_error(truth_flat, scaled_flat)
+#       mae_scaled = mean_absolute_error(truth_flat, scaled_flat)
+#       print(f"[SCALED] MSE={mse_scaled:.4f}, MAE={mae_scaled:.4f}")
+
+
+#       y_test_origin = scaler.inverse_transform(y_test_reshaped)
+#       y_pred_origin = scaler.inverse_transform(y_pred_reshaped)
+
+
+#       print('y_test_origin', y_test_origin.shape)
+#       print('y_pred_origin', y_pred_origin.shape)
+
+
+#       # Create the directory for saving plots if it doesn't exist
+#       os.makedirs("plot_saved", exist_ok=True)
+
+#       # Plotting the results
+#       plt.figure(figsize=(10, 6))
+#       plt.plot(y_test_origin[:,2], label="Ground Truth", color='blue')  # Use the third element as the one for plotting 
+#       plt.plot(y_pred_origin[:,2], label="Predicted", color='red')  # Use the third element as the one for plotting 
+#       plt.title(f"{symbol}: Ground Truth vs Predicted")
+#       plt.xlabel("Time Steps")
+#       plt.ylabel("Values")
+#       plt.legend()
+
+#       # Save the plot as a PDF in the 'plot_saved' folder
+#       plt.savefig(os.path.join("plot_saved", f"{symbol}_{num_stocks}.pdf"))
+
+
+
+#       # Calculate metrics
+#       mse = mean_squared_error(y_test_origin, y_pred_origin) # 如果不指定， 就是一个overall 的 MSE， MAE，R^2
+      
+#       mae = mean_absolute_error(y_test_origin, y_pred_origin)
+#       r2 = r2_score(y_test_origin, y_pred_origin)
+#       print(f"MSE: {mse}, MAE: {mae}, R^2: {r2}")
+#       eval_df = pd.DataFrame({
+#             'MAE': [mae],
+#             'MSE': [mse],
+#             'R2': [r2]
+#         })
+      
+
+#       # print(y_test_origin)
+#       # print("___")
+#       # print(y_pred_origin)
+#       # Save the results to a CSV file
+#       date_str = datetime.now().strftime("%Y%m%d%H%M")
+#       # Assuming y_test_reshaped, y_pred_reshaped, y_test_origin, and y_pred_origin are arrays of the same shape
+
+#       predicted_data_results = pd.DataFrame({
+#           'True_Data_Volume': y_test_reshaped[0],
+#           'Predicted_Data_Volume': y_pred_reshaped[0],
+#           'True_Data_origin_Volume': y_test_origin[0],
+#           'Predicted_Data_origin_Volume': y_pred_origin[0],
+#           'True_Data_Open': y_test_reshaped[1],  # Assuming this is correct
+#           'Predicted_Data_Open': y_pred_reshaped[1],  # Assuming this is correct
+#           'True_Data_origin_Open': y_test_origin[1],  # Assuming this is correct
+#           'Predicted_Data_origin_Open': y_pred_origin[1],  # Assuming this is correct
+#           'True_Data_High': y_test_reshaped[2],  # Assuming this is correct
+#           'Predicted_Data_High': y_pred_reshaped[2],  # Assuming this is correct
+#           'True_Data_origin_High': y_test_origin[2],  # Assuming this is correct
+#           'Predicted_Data_origin_High': y_pred_origin[2],  # Assuming this is correct
+#           'True_Data_Low': y_test_reshaped[3],  # Assuming this is correct
+#           'Predicted_Data_Low': y_pred_reshaped[3],  # Assuming this is correct
+#           'True_Data_origin_Low': y_test_origin[3],  # Assuming this is correct
+#           'Predicted_Data_origin_Low': y_pred_origin[3],  # Assuming this is correct
+#           'True_Data_Close': y_test_reshaped[4],  # Assuming this is correct
+#           'Predicted_Data_Close': y_pred_reshaped[4],  # Assuming this is correct
+#           'True_Data_origin_Close': y_test_origin[4],  # Assuming this is correct
+#           'Predicted_Data_origin_Close': y_pred_origin[4],  # Assuming this is correct
+#           'True_Data_Scaled_sentiment': y_test_reshaped[5],  # Assuming this is correct
+#           'Predicted_Data_Scaled_sentiment': y_pred_reshaped[5],  # Assuming this is correct
+#           'True_Data_origin_Scaled_sentiment': y_test_origin[5],  # Assuming this is correct
+#           'Predicted_Data_origin_Scaled_sentiment': y_pred_origin[5]  # Assuming this is correct
+#       })
+
+#       saving_folder = os.path.join(f"test_result_{num_csvs}",f"{symbol}_{date_str}")
+#       os.makedirs(saving_folder, exist_ok=True)
+#       predicted_data_results_save_path = os.path.join(saving_folder, f'{symbol}_{date_str}_predicted_data.csv')
+#       predicted_data_results.to_csv(predicted_data_results_save_path, index=False)
+
+#       os.makedirs(saving_folder, exist_ok=True)
+#       eval_df_save_path = os.path.join(saving_folder, f'{symbol}_{date_str}_eval_data.csv')
+#       eval_df.to_csv(eval_df_save_path, index=False)
+#       print(f"saved predictions and evals to {predicted_data_results_save_path} and {eval_df_save_path}")
+#       return
+
+
 def eval_model(model, dataloader_test, symbol, num_csvs, scaler, output_length):
-      # Prediction on test data
-      predictions = []
-      actuals = []
-      model.eval()
-      with torch.no_grad(): 
-        # for x, y in enumerate(dataloader_test):
+    model.eval()
+    predictions, actuals = [], []
+
+    # 1) Collect scaled predictions and ground truth
+    with torch.no_grad():
         for x, y in dataloader_test:
-          modelout_pre  = model(x.to(device))
-          modelout = modelout_pre[:, -int(output_length):, :]
-          # print('modelout',modelout.shape)
-          predictions.append(modelout.cpu().numpy())
-          actuals.append(y.cpu().numpy())
-      
+            # modelout_pre: [B, output_length * feature_dim]
+            modelout_pre = model(x.to(device))
+            B = modelout_pre.size(0)
+            # reshape into [B, output_length, feature_dim]
+            modelout = modelout_pre.view(B, output_length, -1)
+            predictions.append(modelout.cpu().numpy())
+            actuals.append(y.cpu().numpy())
 
+    # 2) Concatenate batches → (N, output_length, feature_dim)
+    preds = np.concatenate(predictions, axis=0)
+    trues = np.concatenate(actuals,     axis=0)
 
-      output_length = 3
-      predictions_np = np.concatenate(predictions, axis=0) # (155, 3, 6)
-      actuals_np = np.concatenate(actuals, axis=0) # (155, 3, 6)
-      
-      
-      y_pred_reshaped = predictions_np.reshape(-1, 6)
-      y_test_reshaped = actuals_np.reshape(-1, 6)
-      print('y_pred_reshaped', y_pred_reshaped.shape)
-      print('y_test_reshaped', y_test_reshaped.shape)
+    # 3) Flatten → (N * output_length, feature_dim)
+    P_flat = preds.reshape(-1, preds.shape[-1])
+    T_flat = trues.reshape(-1, trues.shape[-1])
+    print(f"y_pred_reshaped {P_flat.shape}, y_test_reshaped {T_flat.shape}")
 
+    # 4) Metrics in the scaled [0,1] space
+    mse_scaled = mean_squared_error(T_flat, P_flat)
+    mae_scaled = mean_absolute_error(T_flat, P_flat)
+    print(f"[SCALED] MSE={mse_scaled:.4f}, MAE={mae_scaled:.4f}")
 
-      y_test_origin = scaler.inverse_transform(y_test_reshaped)
-      y_pred_origin = scaler.inverse_transform(y_pred_reshaped)
+    # 5) Clamp to [0,1] then invert to raw units
+    P_clipped = np.clip(P_flat, 0.0, 1.0)
+    raw_pred  = scaler.inverse_transform(P_clipped)
+    raw_true  = scaler.inverse_transform(T_flat)
+    print(f"y_test_origin {raw_true.shape}, y_pred_origin {raw_pred.shape}")
 
+    # 6) Per-feature breakdown
+    feature_names = ['Volume', 'Open', 'High', 'Low', 'Close', 'Scaled_sentiment']
+    df_true = pd.DataFrame(raw_true, columns=feature_names)
+    df_pred = pd.DataFrame(raw_pred, columns=feature_names)
 
-      print('y_test_origin', y_test_origin.shape)
-      print('y_pred_origin', y_pred_origin.shape)
+    print("\nPer-feature raw errors:")
+    for c in feature_names:
+        mse_c = mean_squared_error(df_true[c], df_pred[c])
+        mae_c = mean_absolute_error(df_true[c], df_pred[c])
+        print(f"  {c:>15s} | MSE={mse_c:,.2f}  MAE={mae_c:,.2f}")
 
+    # 7) Overall raw metrics
+    mse_raw = mean_squared_error(raw_true, raw_pred)
+    mae_raw = mean_absolute_error(raw_true, raw_pred)
+    r2_raw  = r2_score(raw_true, raw_pred)
+    print(f"\nOverall raw metrics for {symbol}:")
+    print(f"  MSE={mse_raw:,.2f}, MAE={mae_raw:,.2f}, R²={r2_raw:.4f}")
 
-      # Create the directory for saving plots if it doesn't exist
-      os.makedirs("plot_saved", exist_ok=True)
+    # 8) Plotting (unchanged)
+    os.makedirs("plot_saved", exist_ok=True)
+    plt.figure(figsize=(10, 6))
+    plt.plot(raw_true[:, 2], label="Ground Truth")
+    plt.plot(raw_pred[:, 2], label="Predicted")
+    plt.title(f"{symbol}: Ground Truth vs Predicted")
+    plt.xlabel("Time Steps"); plt.ylabel("Values"); plt.legend()
+    plt.savefig(os.path.join("plot_saved", f"{symbol}_{num_csvs}.pdf"))
 
-      # Plotting the results
-      plt.figure(figsize=(10, 6))
-      plt.plot(y_test_origin[:,2], label="Ground Truth", color='blue')  # Use the third element as the one for plotting 
-      plt.plot(y_pred_origin[:,2], label="Predicted", color='red')  # Use the third element as the one for plotting 
-      plt.title(f"{symbol}: Ground Truth vs Predicted")
-      plt.xlabel("Time Steps")
-      plt.ylabel("Values")
-      plt.legend()
+    # 9) Save metrics & sample predictions (optional)
+    # -- you can adapt this section to your existing CSV logic --
+    eval_df = pd.DataFrame({'MAE': [mae_raw], 'MSE': [mse_raw], 'R2': [r2_raw]})
+    date_str = datetime.now().strftime("%Y%m%d%H%M")
+    folder = os.path.join(f"test_result_{num_csvs}", f"{symbol}_{date_str}")
+    os.makedirs(folder, exist_ok=True)
+    eval_df.to_csv(os.path.join(folder, f"{symbol}_{date_str}_eval.csv"), index=False)
 
-      # Save the plot as a PDF in the 'plot_saved' folder
-      plt.savefig(os.path.join("plot_saved", f"{symbol}_{num_stocks}.pdf"))
+    sample_df = pd.DataFrame(raw_pred[:output_length], columns=feature_names)
+    sample_df.to_csv(os.path.join(folder, f"{symbol}_{date_str}_preds.csv"), index=False)
 
+    print(f"Saved evaluation to {folder}")
 
-
-      # Calculate metrics
-      mse = mean_squared_error(y_test_origin, y_pred_origin) # 如果不指定， 就是一个overall 的 MSE， MAE，R^2
-      mae = mean_absolute_error(y_test_origin, y_pred_origin)
-      r2 = r2_score(y_test_origin, y_pred_origin)
-      print(f"MSE: {mse}, MAE: {mae}, R^2: {r2}")
-      eval_df = pd.DataFrame({
-            'MAE': [mae],
-            'MSE': [mse],
-            'R2': [r2]
-        })
-      
-
-      # print(y_test_origin)
-      # print("___")
-      # print(y_pred_origin)
-      # Save the results to a CSV file
-      date_str = datetime.now().strftime("%Y%m%d%H%M")
-      # Assuming y_test_reshaped, y_pred_reshaped, y_test_origin, and y_pred_origin are arrays of the same shape
-
-      predicted_data_results = pd.DataFrame({
-          'True_Data_Volume': y_test_reshaped[0],
-          'Predicted_Data_Volume': y_pred_reshaped[0],
-          'True_Data_origin_Volume': y_test_origin[0],
-          'Predicted_Data_origin_Volume': y_pred_origin[0],
-          'True_Data_Open': y_test_reshaped[1],  # Assuming this is correct
-          'Predicted_Data_Open': y_pred_reshaped[1],  # Assuming this is correct
-          'True_Data_origin_Open': y_test_origin[1],  # Assuming this is correct
-          'Predicted_Data_origin_Open': y_pred_origin[1],  # Assuming this is correct
-          'True_Data_High': y_test_reshaped[2],  # Assuming this is correct
-          'Predicted_Data_High': y_pred_reshaped[2],  # Assuming this is correct
-          'True_Data_origin_High': y_test_origin[2],  # Assuming this is correct
-          'Predicted_Data_origin_High': y_pred_origin[2],  # Assuming this is correct
-          'True_Data_Low': y_test_reshaped[3],  # Assuming this is correct
-          'Predicted_Data_Low': y_pred_reshaped[3],  # Assuming this is correct
-          'True_Data_origin_Low': y_test_origin[3],  # Assuming this is correct
-          'Predicted_Data_origin_Low': y_pred_origin[3],  # Assuming this is correct
-          'True_Data_Close': y_test_reshaped[4],  # Assuming this is correct
-          'Predicted_Data_Close': y_pred_reshaped[4],  # Assuming this is correct
-          'True_Data_origin_Close': y_test_origin[4],  # Assuming this is correct
-          'Predicted_Data_origin_Close': y_pred_origin[4],  # Assuming this is correct
-          'True_Data_Scaled_sentiment': y_test_reshaped[5],  # Assuming this is correct
-          'Predicted_Data_Scaled_sentiment': y_pred_reshaped[5],  # Assuming this is correct
-          'True_Data_origin_Scaled_sentiment': y_test_origin[5],  # Assuming this is correct
-          'Predicted_Data_origin_Scaled_sentiment': y_pred_origin[5]  # Assuming this is correct
-      })
-
-      saving_folder = os.path.join(f"test_result_{num_csvs}",f"{symbol}_{date_str}")
-      os.makedirs(saving_folder, exist_ok=True)
-      predicted_data_results_save_path = os.path.join(saving_folder, f'{symbol}_{date_str}_predicted_data.csv')
-      predicted_data_results.to_csv(predicted_data_results_save_path, index=False)
-
-      os.makedirs(saving_folder, exist_ok=True)
-      eval_df_save_path = os.path.join(saving_folder, f'{symbol}_{date_str}_eval_data.csv')
-      eval_df.to_csv(eval_df_save_path, index=False)
-      print(f"saved predictions and evals to {predicted_data_results_save_path} and {eval_df_save_path}")
-      return
    
 
 
@@ -369,7 +461,7 @@ names_50 = [
 # pred_names = ['TSM']
 pred_names = ['KO','AMD',"TSM","GOOG",'WMT']
 
-names = names_50
+names = names_5
 # num_stocks = 1
 # num_stocks = len(names)
 # num_stocks = 50
