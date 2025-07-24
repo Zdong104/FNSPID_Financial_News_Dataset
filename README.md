@@ -1,6 +1,6 @@
 # News: 
  07242025：
- We will stop the maintainance for this repo. All the right for commercial use and research use are released. Feel free to use is.
+ We will stop the maintainance for this repo. All the right for commercial use and research use are released. Feel free to use :) .
  
 
 FNSPID has been selected as KDD2024 Applied Data Science Track Paper
